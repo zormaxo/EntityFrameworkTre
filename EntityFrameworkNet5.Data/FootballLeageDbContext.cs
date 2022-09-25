@@ -3,7 +3,6 @@ using EntityFrameworkNet5.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 
 namespace EntityFrameworkNet5.Data
 {
@@ -11,8 +10,8 @@ namespace EntityFrameworkNet5.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=FootballLeage_EfCore", sqlOptions => 
-                { 
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=FootballLeage_EfCore", sqlOptions =>
+                {
                     sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 })
                 .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
@@ -25,6 +24,12 @@ namespace EntityFrameworkNet5.Data
             modelBuilder.ApplyConfiguration(new LeagueConfiguration());
             modelBuilder.ApplyConfiguration(new TeamConfiguration());
             modelBuilder.ApplyConfiguration(new CoachConfiguration());
+
+            modelBuilder.Entity<Author>().HasMany(m => m.Books)
+                .WithOne(m => m.Author)
+                .HasForeignKey(m => m.AuthorId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             //////Set all FK relationships should be restrict
             ////var foreignKeys = modelBuilder.Model.GetEntityTypes()
@@ -54,6 +59,9 @@ namespace EntityFrameworkNet5.Data
         public DbSet<Match> Matches { get; set; }
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<TeamsCoachesLeaguesView> TeamsCoachesLeagues { get; set; }
+
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
     }
 }

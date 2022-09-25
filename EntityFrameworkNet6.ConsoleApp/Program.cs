@@ -1,10 +1,18 @@
 ﻿/* Simple Insert Operation Methods */
 using EntityFrameworkNet5.Data;
-using EntityFrameworkNet5.Domain;
 using Microsoft.EntityFrameworkCore;
 
 
 FootballLeageDbContext context = new FootballLeageDbContext();
+
+var author = await context.Authors.FirstOrDefaultAsync();
+
+if (author != null)
+{
+    context.Authors.Remove(author);
+    context.SaveChanges();
+}
+
 
 
 //await AddNewLeague();
@@ -70,9 +78,9 @@ FootballLeageDbContext context = new FootballLeageDbContext();
 
 
 
-/* Select History Of Teams Table */
-await TeamsQueries();
-await TeamsHistoryTemporalQueries();
+/////* Select History Of Teams Table */
+////await TeamsQueries();
+////await TeamsHistoryTemporalQueries();
 
 Console.WriteLine("Press Any Key To End....");
 Console.ReadKey();
