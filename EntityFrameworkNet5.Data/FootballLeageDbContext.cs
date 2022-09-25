@@ -26,20 +26,20 @@ namespace EntityFrameworkNet5.Data
             modelBuilder.ApplyConfiguration(new TeamConfiguration());
             modelBuilder.ApplyConfiguration(new CoachConfiguration());
 
-            //Set all FK relationships should be restrict
-            var foreignKeys = modelBuilder.Model.GetEntityTypes()
-                .SelectMany(x => x.GetForeignKeys())
-                .Where(x => !x.IsOwnership && x.DeleteBehavior == DeleteBehavior.Cascade);
+            //////Set all FK relationships should be restrict
+            ////var foreignKeys = modelBuilder.Model.GetEntityTypes()
+            ////    .SelectMany(x => x.GetForeignKeys())
+            ////    .Where(x => !x.IsOwnership && x.DeleteBehavior == DeleteBehavior.Cascade);
 
-            foreach (var fk in foreignKeys)
-            {
-                fk.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            ////foreach (var fk in foreignKeys)
+            ////{
+            ////    fk.DeleteBehavior = DeleteBehavior.Restrict;
+            ////}
 
-            //Indicate which has a History Table
-            modelBuilder
-                .Entity<Team>()
-                .ToTable("Teams", b => b.IsTemporal());
+            //////Indicate which has a History Table
+            ////modelBuilder
+            ////    .Entity<Team>()
+            ////    .ToTable("Teams", b => b.IsTemporal());
 
         }
 

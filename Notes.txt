@@ -1,0 +1,2 @@
+add-migration TemporalTableDeleted
+update-database

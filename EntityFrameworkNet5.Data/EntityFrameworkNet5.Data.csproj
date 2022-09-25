@@ -21,4 +21,8 @@
     <ProjectReference Include="..\EntityFrameworkNet5.Domain\EntityFrameworkNet5.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
